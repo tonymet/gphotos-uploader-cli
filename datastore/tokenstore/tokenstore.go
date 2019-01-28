@@ -19,13 +19,16 @@ var (
 )
 
 // StoreToken lets you store a token in the OS keyring
+// TODO: store token in db
 func StoreToken(googleUserEmail string, token *oauth2.Token) error {
 	tokenJSONBytes, err := json.Marshal(token)
 	if err != nil {
 		return err
 	}
 
-	err = keyring.Set(serviceName, googleUserEmail, string(tokenJSONBytes))
+	/*
+		err = keyring.Set(serviceName, googleUserEmail, string(tokenJSONBytes))
+	*/
 	if err != nil {
 		return stacktrace.Propagate(err, "failed storing token into keyring")
 	}
@@ -33,6 +36,7 @@ func StoreToken(googleUserEmail string, token *oauth2.Token) error {
 }
 
 // RetrieveToken lets you get a token by google account email
+// TODO: retrieve token from db
 func RetrieveToken(googleUserEmail string) (*oauth2.Token, error) {
 	tokenJSONString, err := keyring.Get(serviceName, googleUserEmail)
 	if err != nil {

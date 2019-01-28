@@ -1,6 +1,7 @@
 package completeduploads
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -9,8 +10,10 @@ import (
 	"strings"
 
 	"github.com/nmrshll/gphotos-uploader-cli/utils/filesystem"
+	"github.com/palantir/stacktrace"
 	"github.com/pierrec/xxHash/xxHash32"
 	"github.com/syndtr/goleveldb/leveldb"
+	"golang.org/x/oauth2"
 )
 
 type CompletedUploadsService struct {
@@ -121,6 +124,39 @@ func (s *CompletedUploadsService) CacheAsAlreadyUploaded(filePath string) error 
 	}
 	log.Printf("Marked as uploaded: %s", filePath)
 
+	return nil
+}
+
+// RetrieveToken return users token
+func (s *CompletedUploadsService) RetrieveToken(user string) (*oauth2.Token, error) {
+	tokenJSONString, err := s.db.Get([]byte(fmt.Sprintf("%s_%s", "credential", user)), nil)
+	if err == leveldb.ErrNotFound {
+		log.Printf("Error finding credential")
+		return nil, err
+	}
+
+	var token oauth2.Token
+	err = json.Unmarshal([]byte(tokenJSONString), &token)
+	if err != nil {
+		return nil, stacktrace.Propagate(err, "failed unmarshaling token")
+	}
+	return &token, nil
+}
+
+// StoreToken set users token
+func (s *CompletedUploadsService) StoreToken(user string, token *oauth2.Token) error {
+	tokenJSONBytes, err := json.Marshal(token)
+	if err != nil {
+		log.Printf("error marshalling token")
+		return err
+	}
+
+	err = s.db.Put([]byte(fmt.Sprintf("%s_%s", "credential", user)), tokenJSONBytes, nil)
+
+	if err != nil {
+		return err
+	}
+	log.Printf("stored token for user: %s", user)
 	return nil
 }
 

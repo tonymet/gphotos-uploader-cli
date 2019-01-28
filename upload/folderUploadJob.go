@@ -14,7 +14,6 @@ import (
 	gphotos "github.com/nmrshll/google-photos-api-client-go/noserver-gphotos"
 	"github.com/nmrshll/gphotos-uploader-cli/config"
 	"github.com/nmrshll/gphotos-uploader-cli/datastore/completeduploads"
-	"github.com/nmrshll/gphotos-uploader-cli/datastore/tokenstore"
 	"github.com/nmrshll/gphotos-uploader-cli/fileshandling"
 	"github.com/nmrshll/gphotos-uploader-cli/utils/filesystem"
 )
@@ -58,7 +57,8 @@ func NewFolderUploadJob(configFolderUploadJob *config.FolderUploadJob, completed
 
 func authenticate(folderUploadJob *FolderUploadJob) (*gphotos.Client, error) {
 	// try to load token from keyring
-	token, err := tokenstore.RetrieveToken(folderUploadJob.Account)
+	//token, err := tokenstore.RetrieveToken(folderUploadJob.Account)
+	token, err := folderUploadJob.completedUploads.RetrieveToken(folderUploadJob.Account)
 	if err == nil && token != nil { // if error ignore and skip
 		// if found create client from token
 		gphotosClient, err := gphotos.NewClient(gphotos.FromToken(config.OAuthConfig(folderUploadJob.uploaderConfigAPICredentials), token))
@@ -81,7 +81,8 @@ func authenticate(folderUploadJob *FolderUploadJob) (*gphotos.Client, error) {
 	}
 
 	// and store the token into the keyring
-	err = tokenstore.StoreToken(folderUploadJob.Account, gphotosClient.Token())
+	//err = tokenstore.StoreToken(folderUploadJob.Account, gphotosClient.Token())
+	err = folderUploadJob.completedUploads.StoreToken(folderUploadJob.Account, gphotosClient.Token())
 	if err != nil {
 		return nil, stacktrace.Propagate(err, "failed storing token")
 	}
