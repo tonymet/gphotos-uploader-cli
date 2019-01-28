@@ -26,9 +26,7 @@ func StoreToken(googleUserEmail string, token *oauth2.Token) error {
 		return err
 	}
 
-	/*
-		err = keyring.Set(serviceName, googleUserEmail, string(tokenJSONBytes))
-	*/
+	err = keyring.Set(serviceName, googleUserEmail, string(tokenJSONBytes))
 	if err != nil {
 		return stacktrace.Propagate(err, "failed storing token into keyring")
 	}
