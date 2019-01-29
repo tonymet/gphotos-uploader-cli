@@ -1,11 +1,58 @@
-FROM golang:alpine
-RUN apk add make git gcc
-RUN apk add bind-dev musl-dev
-RUN mkdir /app
-WORKDIR /app
-COPY ./gphotos-uploader-cli/go.mod ./gphotos-uploader-cli/go.sum ./
+# Accept the Go version for the image to be set as a build argument.
+# Default to Go 1.11
+ARG GO_VERSION=1.11
+
+# First stage: build the executable.
+FROM golang:${GO_VERSION}-alpine AS builder
+
+# Create the user and group files that will be used in the running container to
+# run the process as an unprivileged user.
+RUN mkdir /user && \
+    echo 'nobody:x:65534:65534:nobody:/:' > /user/passwd && \
+    echo 'nobody:x:65534:' > /user/group
+
+# Install the Certificate-Authority certificates for the app to be able to make
+# calls to HTTPS endpoints.
+# Git is required for fetching the dependencies.
+RUN apk add --no-cache ca-certificates git make gcc \
+    bind-dev musl-dev
+
+# Set the working directory outside $GOPATH to enable the support for modules.
+WORKDIR /src
+
+# Fetch dependencies first; they are less susceptible to change on every build
+# and will therefore be cached for speeding up the next build
+COPY ./go.mod ./go.sum ./
 RUN go mod download
-ADD ./gphotos-uploader-cli/ /app/
-ADD ./oauth2-noserver  /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20180827223500-16b622b98a45/
-RUN    make build
-ENTRYPOINT ["/app/gphotos-uploader-cli"]
+
+# Import the code from the context.
+COPY ./ ./
+
+# Build the executable to `/app`. Mark the build as statically linked.
+#RUN CGO_ENABLED=0 go build \
+#    -installsuffix 'static' \
+#    -o /app .
+RUN CGO_ENABLED=0 make build
+
+# Final stage: the running container.
+FROM scratch AS final
+
+# Import the user and group files from the first stage.
+COPY --from=builder /user/group /user/passwd /etc/
+
+# Import the Certificate-Authority certificates for enabling HTTPS.
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+# Import the compiled executable from the first stage.
+COPY --from=builder /src/gphotos-uploader-cli /app
+
+# Declare the port on which the webserver will be exposed.
+# As we're going to run the executable as an unprivileged user, we can't bind
+# to ports below 1024.
+EXPOSE 17565
+
+# Perform any further action as an unprivileged user.
+USER nobody:nobody
+
+# Run the compiled binary.
+ENTRYPOINT ["/app"]
