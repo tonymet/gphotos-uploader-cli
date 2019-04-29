@@ -1,4 +1,4 @@
-module github.com/nmrshll/gphotos-uploader-cli
+module github.com/tonymet/gphotos-uploader-cli
 
 require (
 	cloud.google.com/go v0.34.0 // indirect
