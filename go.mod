@@ -31,3 +31,5 @@ require (
 	google.golang.org/api v0.0.0-20181213000619-1327b224df06
 	gopkg.in/h2non/filetype.v1 v1.0.5
 )
+
+replace github.com/nmrshll/google-photos-api-client-go => github.com/tonymet/google-photos-api-client-go v0.0.0-20190429220729-92e4d3592598

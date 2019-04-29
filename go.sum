@@ -48,6 +48,8 @@ github.com/steakknife/hamming v0.0.0-20180906055917-c99c65617cd3 h1:njlZPzLwU639
 github.com/steakknife/hamming v0.0.0-20180906055917-c99c65617cd3/go.mod h1:hpGUWaI9xL8pRQCTXQgocU38Qw1g0Us7n5PxxTwTCYU=
 github.com/syndtr/goleveldb v0.0.0-20181128100959-b001fa50d6b2 h1:GnOzE5fEFN3b2zDhJJABEofdb51uMRNb8eqIVtdducs=
 github.com/syndtr/goleveldb v0.0.0-20181128100959-b001fa50d6b2/go.mod h1:Z4AUp2Km+PwemOoO/VB5AOx9XSsIItzFjoJlOSiYmn0=
+github.com/tonymet/google-photos-api-client-go v0.0.0-20190429220729-92e4d3592598 h1:JAikg86jfRNMQepdL9DFmAJ14w/I0QcG+JXt7Rkz+3Q=
+github.com/tonymet/google-photos-api-client-go v0.0.0-20190429220729-92e4d3592598/go.mod h1:yQ9mdki1YQhTAcAj/4i7EeIyLeaU2wU97q0B0+BWfxI=
 github.com/zalando/go-keyring v0.0.0-20180221093347-6d81c293b3fb h1:tXbazu9ZlecQbyCczvA22mWj+lw/36Bdwxapk8v7e7s=
 github.com/zalando/go-keyring v0.0.0-20180221093347-6d81c293b3fb/go.mod h1:XlXBIfkGawHNVOHlenOaBW7zlfCh8LovwjOgjamYnkQ=
 golang.org/x/net v0.0.0-20181207154023-610586996380 h1:zPQexyRtNYBc7bcHmehl1dH6TB3qn8zytv8cBGLDNY0=
