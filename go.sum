@@ -73,6 +73,8 @@ github.com/tonymet/google-photos-api-client-go v0.0.0-20190430004328-7eeefc05350
 github.com/tonymet/google-photos-api-client-go v0.0.0-20190430004328-7eeefc05350c/go.mod h1:kJHCNZ7QAsJgtIjoPESTXWsbBM3YyrhEQ2bLHC2Ff1A=
 github.com/tonymet/google.golang.org v0.0.0-20190430003821-d613145832f3 h1:kSGi8bDPgMI9FsJD7R0EBSbwR1IlCjjN76v29w+8P68=
 github.com/tonymet/google.golang.org v0.0.0-20190430003821-d613145832f3/go.mod h1:bisF7xB3VOhh4GVoMPHArCd5BlFyjIb5lHeVqc2K7LY=
+github.com/tonymet/gphotos-uploader-cli v0.1.12-0.20190430004705-0301b12a2961 h1:zE5Pkud6OBB9FCuEuwe3DaRyY7KjnfCd6/dt2rSEhB0=
+github.com/tonymet/gphotos-uploader-cli v0.1.12-0.20190430004705-0301b12a2961/go.mod h1:wBGDP+rHSXkOlAy10G2AbPovCeDlFinNk/qYg6RCy5k=
 github.com/zalando/go-keyring v0.0.0-20180221093347-6d81c293b3fb h1:tXbazu9ZlecQbyCczvA22mWj+lw/36Bdwxapk8v7e7s=
 github.com/zalando/go-keyring v0.0.0-20180221093347-6d81c293b3fb/go.mod h1:XlXBIfkGawHNVOHlenOaBW7zlfCh8LovwjOgjamYnkQ=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
