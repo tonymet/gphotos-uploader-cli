@@ -12,7 +12,6 @@ require (
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/nmrshll/go-cp v0.0.0-20180115193924-61436d3b7cfa
 	github.com/nmrshll/google-photos-api-client-go v0.0.0-20180906090521-a94d2fbcfb40
-	github.com/nmrshll/gphotos-uploader-cli v0.1.11 // indirect
 	github.com/palantir/stacktrace v0.0.0-20161112013806-78658fd2d177
 	github.com/pierrec/xxHash v0.1.1
 	github.com/spf13/cobra v0.0.3
